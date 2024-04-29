@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: robot-fleet-monitoring
+  name: service-robot
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: robot-fleet-monitoring
+      app: service-robot
   template:
     metadata:
       labels:
-        app: robot-fleet-monitoring
+        app: service-robot
     spec:
       containers:
-      - name: robot-fleet-monitoring
-        image: perqara/robot-fleet-monitoring-image:latest
+      - name: service-robot
+        image: robot-fleet-monitoring/service-robot-image:latest
         ports:
         - containerPort: 8000
