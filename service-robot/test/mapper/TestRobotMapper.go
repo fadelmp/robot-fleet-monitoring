@@ -23,7 +23,7 @@ func (suite *TestSuite) TestRobotMapper_ToRobot(t *testing.T) {
 
 	// RobotDto
 	RobotDto := dto.Robot{
-		Id:        1,
+		Id:        "aaaa-aaaa-aaaa-aaaa-aaaa-aaaa",
 		Name:      "Lychee",
 		Longitude: -1.0000,
 		Latitude:  1.0000,
@@ -44,7 +44,7 @@ func (suite *TestSuite) TestRobotMapper_ToRobotDto(t *testing.T) {
 
 	// RobotDto
 	Robot := domain.Robot{
-		Id:        1,
+		Id:        "aaaa-aaaa-aaaa-aaaa-aaaa-aaaa",
 		Name:      "Lychee",
 		Longitude: -1.0000,
 		Latitude:  1.0000,
@@ -77,7 +77,7 @@ func (suite *TestSuite) TestRobotMapper_ToRobotDtoList(t *testing.T) {
 
 	// RobotDto
 	Robot := domain.Robot{
-		Id:        1,
+		Id:        "aaaa-aaaa-aaaa-aaaa-aaaa-aaaa",
 		Name:      "Lychee",
 		Longitude: -1.0000,
 		Latitude:  1.0000,

@@ -40,7 +40,7 @@ func (suite *TestSuite) TestRobotUsecase_GetById(t *testing.T) {
 	RobotUsecase := usecase.NewRobotUsecase(suite.baseMapper, suite.mapper, suite.repo, suite.comparator)
 
 	// Test
-	Robots := RobotUsecase.GetById(1)
+	Robots := RobotUsecase.GetById("aaaa-aaaa-aaaa-aaaa-aaaa-aaaa")
 
 	// Assert
 	assert.NotNil(t, Robots)
@@ -76,7 +76,7 @@ func (suite *TestSuite) TestRobotUsecase_Update(t *testing.T) {
 
 	// RobotDto
 	RobotDto := dto.Robot{
-		Id:        1,
+		Id:        "aaaa-aaaa-aaaa-aaaa-aaaa-aaaa",
 		Name:      "Lychee",
 		Longitude: 1.0000,
 		Latitude:  1.0000,
@@ -99,7 +99,7 @@ func (suite *TestSuite) TestRobotUsecase_Delete(t *testing.T) {
 
 	// RobotDto
 	RobotDto := dto.Robot{
-		Id: 1,
+		Id: "aaaa-aaaa-aaaa-aaaa-aaaa-aaaa",
 		Base: dto.Base{
 			DeletedBy: "System",
 		},

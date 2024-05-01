@@ -8,12 +8,13 @@ import (
 	"robot-fleet-monitoring/service-robot/mapper"
 	"robot-fleet-monitoring/service-robot/message"
 	"robot-fleet-monitoring/service-robot/repository"
+	"robot-fleet-monitoring/service-robot/utils"
 )
 
 // Interface
 type RobotUsecaseContract interface {
 	GetAll() []dto.Robot
-	GetById(uint) dto.Robot
+	GetById(string) dto.Robot
 
 	Create(dto.Robot) error
 	Update(dto.Robot) error
@@ -53,7 +54,7 @@ func (u *RobotUsecase) GetAll() []dto.Robot {
 	return u.mapper.ToRobotDtoList(robots)
 }
 
-func (u *RobotUsecase) GetById(id uint) dto.Robot {
+func (u *RobotUsecase) GetById(id string) dto.Robot {
 
 	// Get By Id
 	robot := u.repo.GetById(id)
@@ -68,6 +69,9 @@ func (u *RobotUsecase) Create(dto dto.Robot) error {
 	if err := u.comparator.CheckName(dto); err != nil {
 		return err
 	}
+
+	id, _ := utils.GenerateUUID()
+	dto.Id = id
 
 	// Map Robot Dto to Robot Domain
 	robot := u.mapper.ToRobot(dto)

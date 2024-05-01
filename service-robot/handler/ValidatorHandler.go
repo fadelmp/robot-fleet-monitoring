@@ -2,7 +2,6 @@ package handler
 
 import (
 	"robot-fleet-monitoring/service-robot/dto"
-	"strconv"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -21,16 +20,7 @@ func Validate(dto *dto.Robot) error {
 
 func ParseId(e echo.Context, dto *dto.Robot) error {
 
-	idStr := e.Param("id")
-
-	// Parse the id string to uint
-	id, err := strconv.ParseUint(idStr, 10, 64)
-
-	if err != nil {
-		return err
-	}
-
-	dto.Id = uint(id)
+	dto.Id = e.Param("id")
 
 	return nil
 }

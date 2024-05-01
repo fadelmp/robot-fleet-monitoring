@@ -3,7 +3,6 @@ package repository
 import (
 	"robot-fleet-monitoring/service-robot/config"
 	"robot-fleet-monitoring/service-robot/domain"
-	"strconv"
 
 	"github.com/go-redis/redis"
 	"github.com/jinzhu/gorm"
@@ -12,7 +11,7 @@ import (
 // Interface
 type RobotRepositoryContract interface {
 	GetAll() []domain.Robot
-	GetById(uint) domain.Robot
+	GetById(string) domain.Robot
 	GetByName(string) domain.Robot
 
 	Create(*domain.Robot) error
@@ -38,78 +37,78 @@ func NewRobotRepository(DB *gorm.DB, Redis *redis.Client) *RobotRepository {
 
 func (r *RobotRepository) GetAll() []domain.Robot {
 
-	var Robots []domain.Robot
+	var robots []domain.Robot
 
 	// Get All Data
-	query := r.DB.Model(&Robots).
+	query := r.DB.Model(&robots).
 		Unscoped().
 		Where("is_deleted=?", false).
-		Find(&Robots)
+		Find(&robots)
 
 	// Get Data From Redis
-	config.QueryData(r.Redis, query, "Robots")
+	config.QueryData(r.Redis, query, "robots")
 
-	return Robots
+	return robots
 }
 
-func (r *RobotRepository) GetById(id uint) domain.Robot {
+func (r *RobotRepository) GetById(id string) domain.Robot {
 
-	var Robot domain.Robot
+	var robot domain.Robot
 
 	// Get Data By Id
-	query := r.DB.Model(&Robot).
+	query := r.DB.Model(&robot).
 		Unscoped().
 		Where("is_deleted=?", false).
 		Where("id=?", id).
-		Find(&Robot)
+		Find(&robot)
 
 	// Get Data From Redis
-	config.QueryData(r.Redis, query, "Robot_id_"+strconv.FormatUint(uint64(id), 10))
+	config.QueryData(r.Redis, query, "robot_id_"+id)
 
-	return Robot
+	return robot
 }
 
 func (r *RobotRepository) GetByName(name string) domain.Robot {
 
-	var Robot domain.Robot
+	var robot domain.Robot
 
 	// Get Data By Name
-	query := r.DB.Model(&Robot).
+	query := r.DB.Model(&robot).
 		Unscoped().
 		Where("is_deleted=?", false).
 		Where("name=?", name).
-		Find(&Robot)
+		Find(&robot)
 
 	// Get Data From Redis
-	config.QueryData(r.Redis, query, "Robot_name_"+name)
+	config.QueryData(r.Redis, query, "robot_name_"+name)
 
-	return Robot
+	return robot
 }
 
-func (r *RobotRepository) Create(Robot *domain.Robot) error {
+func (r *RobotRepository) Create(robot *domain.Robot) error {
 
 	// Flush Robot Cache
-	config.FlushData(r.Redis, "Robot*")
+	config.FlushData(r.Redis, "robot*")
 
 	// Create Robot
-	return r.DB.Create(&Robot).Error
+	return r.DB.Create(&robot).Error
 
 }
 
-func (r *RobotRepository) Update(Robot *domain.Robot) error {
+func (r *RobotRepository) Update(robot *domain.Robot) error {
 
 	// Flush Robot Cache
-	config.FlushData(r.Redis, "Robot*")
+	config.FlushData(r.Redis, "robot*")
 
 	// Update Robot
-	return r.DB.Model(&Robot).Unscoped().Update(&Robot).Error
+	return r.DB.Model(&robot).Unscoped().Update(&robot).Error
 }
 
-func (r *RobotRepository) Delete(Robot *domain.Robot) error {
+func (r *RobotRepository) Delete(robot *domain.Robot) error {
 
 	// Flush Robot Cache
-	config.FlushData(r.Redis, "Robot*")
+	config.FlushData(r.Redis, "robot*")
 
 	// Delete Robot
-	return r.DB.Model(&Robot).Unscoped().Update(&Robot).Error
+	return r.DB.Model(&robot).Unscoped().Update(&robot).Error
 }

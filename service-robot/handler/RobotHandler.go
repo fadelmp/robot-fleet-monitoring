@@ -67,7 +67,7 @@ func (h *RobotHandler) GetById(e echo.Context) error {
 	robotDto := h.usecase.GetById(robot.Id)
 
 	// Check Value
-	if robotDto.Id == 0 {
+	if robotDto.Id == "" {
 		return NotFound(e, message.NotFound)
 	}
 

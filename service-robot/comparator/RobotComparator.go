@@ -9,7 +9,7 @@ import (
 
 // Interface
 type RobotComparatorContract interface {
-	CheckId(uint) error
+	CheckId(string) error
 	CheckName(dto.Robot) error
 }
 
@@ -27,13 +27,13 @@ func NewRobotComparator(repo repository.RobotRepositoryContract) *RobotComparato
 
 // Implementation
 
-func (c *RobotComparator) CheckId(id uint) error {
+func (c *RobotComparator) CheckId(id string) error {
 
 	// Get Data By Id
 	robot := c.repo.GetById(id)
 
 	// Return Error If Data Not Found
-	if robot.Id == 0 {
+	if robot.Id == "" {
 
 		return errors.New(message.NotFound)
 	}
@@ -47,7 +47,7 @@ func (c *RobotComparator) CheckName(dto dto.Robot) error {
 	robot := c.repo.GetByName(dto.Name)
 
 	// Return Error If Data Exists
-	if robot.Id != 0 && robot.Id != dto.Id {
+	if robot.Id != "" && robot.Id != dto.Id {
 
 		return errors.New(message.NameExists)
 	}

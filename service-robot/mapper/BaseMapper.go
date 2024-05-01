@@ -10,7 +10,7 @@ import (
 type BaseMapperContract interface {
 	Create(*domain.Base, string)
 	Update(*domain.Base, string)
-	Delete(*domain.Robot, uint, string)
+	Delete(*domain.Robot, string, string)
 
 	ToBaseDto(base domain.Base) dto.Base
 }
@@ -43,7 +43,7 @@ func (m *BaseMapper) Update(Base *domain.Base, name string) {
 	Base.UpdatedBy = name
 }
 
-func (m *BaseMapper) Delete(domain *domain.Robot, id uint, name string) {
+func (m *BaseMapper) Delete(domain *domain.Robot, id string, name string) {
 
 	// Set Deleted Value
 	domain.Id = id

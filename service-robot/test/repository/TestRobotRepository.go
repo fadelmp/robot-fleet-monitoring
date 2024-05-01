@@ -35,7 +35,7 @@ func (suite *TestSuite) TestRobotRepository_GetById(t *testing.T) {
 	repo := repository.NewRobotRepository(suite.repo.DB, suite.repo.Redis)
 
 	// Test
-	Robot := repo.GetById(1)
+	Robot := repo.GetById("aaaa-aaaa-aaaa-aaaa-aaaa-aaaa")
 
 	// Assert
 	assert.NotNil(t, Robot)
@@ -89,7 +89,7 @@ func (suite *TestSuite) TestRobotRepository_Update(t *testing.T) {
 
 	// Robot
 	Robot := &domain.Robot{
-		Id:        1,
+		Id:        "aaaa-aaaa-aaaa-aaaa-aaaa-aaaa",
 		Name:      "Lychee",
 		Longitude: 1.0000,
 		Latitude:  1.0000,
@@ -115,7 +115,7 @@ func (suite *TestSuite) TestRobotRepository_Delete(t *testing.T) {
 
 	// Robot
 	Robot := &domain.Robot{
-		Id: 1,
+		Id: "aaaa-aaaa-aaaa-aaaa-aaaa-aaaa",
 		Base: domain.Base{
 			IsActived: false,
 			IsDeleted: true,
