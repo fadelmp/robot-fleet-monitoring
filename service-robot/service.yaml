@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-robot
+spec:
+  selector:
+    app: service-robot
+  ports:
+  - protocol: TCP
+    port: 8001
+    targetPort: 8001
