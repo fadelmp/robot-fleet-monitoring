@@ -9,15 +9,8 @@ import (
 )
 
 // Interface
-type RobotHandlerContract interface {
-	GetAll(e echo.Context) error
-	GetById(e echo.Context) error
-
-	Create(e echo.Context) error
-	Update(e echo.Context) error
-	Delete(e echo.Context) error
-
-	UpdateFromRabbit(dto.Robot)
+type RabbitMqHandlerContract interface {
+	Get(e echo.Context) error
 }
 
 // Class
@@ -148,11 +141,4 @@ func (h *RobotHandler) Delete(e echo.Context) error {
 	}
 
 	return Success(e, message.DeleteSuccess, "")
-}
-
-func (h *RobotHandler) UpdateFromRabbit(robotDto dto.Robot) {
-
-	SetUsernameFromRabbit(&robotDto)
-
-	h.usecase.Update(robotDto)
 }

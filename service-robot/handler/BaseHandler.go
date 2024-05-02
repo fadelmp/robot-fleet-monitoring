@@ -56,3 +56,10 @@ func SetUsername(robotDto *dto.Robot, c echo.Context) {
 	robotDto.Base.UpdatedBy = username
 	robotDto.Base.DeletedBy = username
 }
+
+func SetUsernameFromRabbit(robotDto *dto.Robot) {
+
+	robotDto.Base.CreatedBy = "SYSTEM"
+	robotDto.Base.UpdatedBy = "SYSTEM"
+	robotDto.Base.DeletedBy = "SYSTEM"
+}

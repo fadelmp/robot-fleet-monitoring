@@ -70,8 +70,8 @@ func (u *RobotUsecase) Create(dto dto.Robot) error {
 		return err
 	}
 
-	id, _ := utils.GenerateUUID()
-	dto.Id = id
+	// Generate UUID
+	dto.Id, _ = utils.GenerateUUID()
 
 	// Map Robot Dto to Robot Domain
 	robot := u.mapper.ToRobot(dto)
