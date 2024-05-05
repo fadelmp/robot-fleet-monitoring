@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-position
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-position
+  template:
+    metadata:
+      labels:
+        app: service-position
+    spec:
+      containers:
+      - name: service-position
+        image: robot-fleet-monitoring/service-position-image:latest
+        ports:
+        - containerPort: 8003
