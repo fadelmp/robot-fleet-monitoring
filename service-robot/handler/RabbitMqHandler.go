@@ -1,15 +1,17 @@
 package handler
 
 import (
+	"encoding/json"
+	"log"
 	"robot-fleet-monitoring/service-robot/dto"
 	"robot-fleet-monitoring/service-robot/usecase"
 
-	"github.com/labstack/echo/v4"
+	"github.com/streadway/amqp"
 )
 
 // Interface
 type RabbitMqHandlerContract interface {
-	UpdateFromRabbit(e echo.Context) error
+	Update(amqp.Delivery) error
 }
 
 // Class
@@ -24,7 +26,16 @@ func NewRabbitMqHandler(usecase usecase.RobotUsecaseContract) *RabbitMqHandler {
 	}
 }
 
-func (h *RobotHandler) UpdateFromRabbit(robotDto dto.Robot) {
+func (h *RabbitMqHandler) Update(msg amqp.Delivery) {
+
+	var robotDto dto.Robot
+
+	if err := json.Unmarshal(msg.Body, &robotDto); err != nil {
+
+		log.Printf("Failed to unmarshal message body: %v", err)
+
+		return
+	}
 
 	SetUsernameFromRabbit(&robotDto)
 

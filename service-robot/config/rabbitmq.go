@@ -30,5 +30,18 @@ func InitRabbit() *amqp.Channel {
 
 	defer ch.Close()
 
+	robotQueue(ch)
+
 	return ch
+}
+
+func robotQueue(channel *amqp.Channel) {
+
+	// Declare a queue
+	queueName := "robot"
+	_, err := channel.QueueDeclare(queueName, false, false, false, false, nil)
+
+	if err != nil {
+		log.Fatalf("Failed to declare a queue: %v", err)
+	}
 }

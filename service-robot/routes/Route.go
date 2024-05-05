@@ -18,7 +18,9 @@ func Init(routes *echo.Echo, db *gorm.DB, redis *redis.Client, channel *amqp.Cha
 	robot := injection.RobotInjection(db, redis)
 	RobotRoute(routes, robot)
 
-	RabbitMqRoute(channel)
+	// Rabbit Route
+	rabbit := injection.RabbitInjection(db, redis)
+	RabbitMqRoute(channel, rabbit)
 
 	return routes
 }
