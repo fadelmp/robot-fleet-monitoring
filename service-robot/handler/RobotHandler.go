@@ -16,8 +16,6 @@ type RobotHandlerContract interface {
 	Create(e echo.Context) error
 	Update(e echo.Context) error
 	Delete(e echo.Context) error
-
-	UpdateFromRabbit(dto.Robot)
 }
 
 // Class
@@ -148,11 +146,4 @@ func (h *RobotHandler) Delete(e echo.Context) error {
 	}
 
 	return Success(e, message.DeleteSuccess, "")
-}
-
-func (h *RobotHandler) UpdateFromRabbit(robotDto dto.Robot) {
-
-	SetUsernameFromRabbit(&robotDto)
-
-	h.usecase.Update(robotDto)
 }

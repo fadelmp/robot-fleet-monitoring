@@ -16,7 +16,6 @@ type RobotRepositoryContract interface {
 
 	Create(*domain.Robot) error
 	Update(*domain.Robot) error
-	Delete(*domain.Robot) error
 }
 
 // Class
@@ -101,14 +100,5 @@ func (r *RobotRepository) Update(robot *domain.Robot) error {
 	config.FlushData(r.Redis, "robot*")
 
 	// Update Robot
-	return r.DB.Model(&robot).Unscoped().Update(&robot).Error
-}
-
-func (r *RobotRepository) Delete(robot *domain.Robot) error {
-
-	// Flush Robot Cache
-	config.FlushData(r.Redis, "robot*")
-
-	// Delete Robot
 	return r.DB.Model(&robot).Unscoped().Update(&robot).Error
 }

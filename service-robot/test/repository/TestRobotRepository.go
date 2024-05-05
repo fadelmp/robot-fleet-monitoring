@@ -107,28 +107,3 @@ func (suite *TestSuite) TestRobotRepository_Update(t *testing.T) {
 	// Assert
 	assert.NoError(t, err)
 }
-
-func (suite *TestSuite) TestRobotRepository_Delete(t *testing.T) {
-
-	// Setup
-	repo := repository.NewRobotRepository(suite.repo.DB, suite.repo.Redis)
-
-	// Robot
-	Robot := &domain.Robot{
-		Id: "aaaa-aaaa-aaaa-aaaa-aaaa-aaaa",
-		Base: domain.Base{
-			IsActived: false,
-			IsDeleted: true,
-			UpdatedAt: time.Now(),
-			UpdatedBy: "System",
-			DeletedAt: time.Now(),
-			DeletedBy: "System",
-		},
-	}
-
-	// Test
-	err := repo.Delete(Robot)
-
-	// Assert
-	assert.NoError(t, err)
-}

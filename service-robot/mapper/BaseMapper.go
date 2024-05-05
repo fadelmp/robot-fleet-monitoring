@@ -64,7 +64,5 @@ func (m *BaseMapper) ToBaseDto(base domain.Base) dto.Base {
 		CreatedBy: base.CreatedBy,
 		UpdatedAt: base.UpdatedAt,
 		UpdatedBy: base.UpdatedBy,
-		DeletedAt: base.DeletedAt,
-		DeletedBy: base.DeletedBy,
 	}
 }

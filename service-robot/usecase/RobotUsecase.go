@@ -126,7 +126,7 @@ func (u *RobotUsecase) Delete(dto dto.Robot) error {
 	u.baseMapper.Delete(&robot, dto.Id, dto.Base.UpdatedBy)
 
 	// Delete Robot and return
-	if u.repo.Delete(&robot) != nil {
+	if u.repo.Update(&robot) != nil {
 		return errors.New(message.DeleteFailed)
 	}
 
