@@ -18,8 +18,9 @@ func main() {
 
 	dbConfig := config.InitDB()
 	redisConfig := config.InitRedis()
+	rabbitConfig := config.InitRabbit()
 
-	routes := routes2.Init(route, dbConfig, redisConfig)
+	routes := routes2.Init(route, dbConfig, redisConfig, rabbitConfig)
 
 	// set logger
 	routes.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
