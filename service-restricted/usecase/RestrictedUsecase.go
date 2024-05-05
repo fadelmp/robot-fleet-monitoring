@@ -22,23 +22,26 @@ type RestrictedUsecaseContract interface {
 
 // Class
 type RestrictedUsecase struct {
-	baseMapper mapper.BaseMapperContract
-	mapper     mapper.RestrictedMapperContract
-	comparator comparator.RestrictedComparatorContract
-	repo       repository.RestrictedRepositoryContract
+	areaUsecase AreaUsecaseContract
+	baseMapper  mapper.BaseMapperContract
+	mapper      mapper.RestrictedMapperContract
+	comparator  comparator.RestrictedComparatorContract
+	repo        repository.RestrictedRepositoryContract
 }
 
 // Constructor
 func NewRestrictedUsecase(
+	areaUsecase AreaUsecaseContract,
 	baseMapper mapper.BaseMapperContract,
 	mapper mapper.RestrictedMapperContract,
 	repo repository.RestrictedRepositoryContract,
 	comparator comparator.RestrictedComparatorContract) *RestrictedUsecase {
 	return &RestrictedUsecase{
-		baseMapper: baseMapper,
-		mapper:     mapper,
-		repo:       repo,
-		comparator: comparator,
+		areaUsecase: areaUsecase,
+		baseMapper:  baseMapper,
+		mapper:      mapper,
+		repo:        repo,
+		comparator:  comparator,
 	}
 }
 
@@ -80,6 +83,11 @@ func (u *RestrictedUsecase) Create(dto dto.Restricted) error {
 		return errors.New(message.CreateFailed)
 	}
 
+	// Create Area
+	if u.areaUsecase.Create(dto, restricted) != nil {
+		return errors.New(message.CreateFailed)
+	}
+
 	return nil
 }
 
@@ -101,8 +109,13 @@ func (u *RestrictedUsecase) Update(dto dto.Restricted) error {
 	// Set Updated Value
 	u.baseMapper.Update(&restricted.Base, dto.Base.UpdatedBy)
 
-	// Update Restricted and return
+	// Update Restricted
 	if u.repo.Update(&restricted) != nil {
+		return errors.New(message.UpdateFailed)
+	}
+
+	// Update Area
+	if u.areaUsecase.Update(dto, restricted) != nil {
 		return errors.New(message.UpdateFailed)
 	}
 
@@ -119,11 +132,19 @@ func (u *RestrictedUsecase) Delete(dto dto.Restricted) error {
 	}
 
 	// Set Deleted Value
-	u.baseMapper.Delete(&restricted, dto.Id, dto.Base.UpdatedBy)
+	u.baseMapper.Delete(&restricted.Base, dto.Base.UpdatedBy)
 
-	// Delete Restricted and return
+	// Set Id
+	restricted.Id = dto.Id
+
+	// Delete Restricted
 	if u.repo.Update(&restricted) != nil {
 		return errors.New(message.DeleteFailed)
+	}
+
+	// Delete Area
+	if u.areaUsecase.Delete(restricted) != nil {
+		return errors.New(message.UpdateFailed)
 	}
 
 	return nil

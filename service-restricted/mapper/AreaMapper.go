@@ -8,7 +8,7 @@ import (
 
 // Interface
 type AreaMapperContract interface {
-	ToAreaList([]dto.Area) domain.Area
+	ToAreaList([]dto.Area, domain.Restricted) []domain.Area
 	ToAreaDtoList([]domain.Area) []dto.Area
 }
 
@@ -23,12 +23,12 @@ func NewAreaMapper() *AreaMapper {
 
 // Implementation
 
-func (m *AreaMapper) ToAreaList(vehiceDtos []dto.Area) []domain.Area {
+func (m *AreaMapper) ToAreaList(areaDtos []dto.Area, restricted domain.Restricted) []domain.Area {
 
-	areas := make([]domain.Area, len(vehiceDtos))
+	areas := make([]domain.Area, len(areaDtos))
 
-	for i, value := range vehiceDtos {
-		areas[i] = m.toArea(value)
+	for i, value := range areaDtos {
+		areas[i] = m.toArea(value, restricted)
 	}
 
 	return areas
@@ -45,14 +45,15 @@ func (m *AreaMapper) ToAreaDtoList(areas []domain.Area) []dto.Area {
 	return areaDtos
 }
 
-func (m *AreaMapper) toArea(areaDto dto.Area) domain.Area {
+func (m *AreaMapper) toArea(areaDto dto.Area, restricted domain.Restricted) domain.Area {
 
 	id, _ := utils.GenerateUUID()
 
 	return domain.Area{
-		Id:        id,
-		Longitude: areaDto.Longitude,
-		Latitude:  areaDto.Latitude,
+		Id:         id,
+		Restricted: restricted,
+		Longitude:  areaDto.Longitude,
+		Latitude:   areaDto.Latitude,
 	}
 }
 

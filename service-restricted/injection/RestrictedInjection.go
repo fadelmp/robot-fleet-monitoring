@@ -14,11 +14,16 @@ import (
 func RestrictedInjection(db *gorm.DB, redis *redis.Client) *handler.RestrictedHandler {
 
 	baseMapper := mapper.NewBaseMapper()
+	areaMapper := mapper.NewAreaMapper()
 	restrictedMapper := mapper.NewRestrictedMapper()
+
 	repo := repository.NewRestrictedRepository(db, redis)
+	areaRepo := repository.NewAreaRepository(db, redis)
 
 	comparator := comparator.NewRestrictedComparator(repo)
-	usecase := usecase.NewRestrictedUsecase(baseMapper, restrictedMapper, repo, comparator)
+
+	areaUsecase := usecase.NewAreaUsecase(baseMapper, areaMapper, areaRepo)
+	usecase := usecase.NewRestrictedUsecase(areaUsecase, baseMapper, restrictedMapper, repo, comparator)
 	handler := handler.NewRestrictedHandler(usecase)
 
 	return handler

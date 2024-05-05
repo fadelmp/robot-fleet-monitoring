@@ -50,7 +50,7 @@ func monitorQueue(channel *amqp.Channel) {
 func robotQueue(channel *amqp.Channel) {
 
 	// Declare a queue
-	queueName := "monitor"
+	queueName := "robot"
 	_, err := channel.QueueDeclare(queueName, false, false, false, false, nil)
 
 	if err != nil {

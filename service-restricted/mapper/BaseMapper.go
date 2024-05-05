@@ -10,7 +10,7 @@ import (
 type BaseMapperContract interface {
 	Create(*domain.Base, string)
 	Update(*domain.Base, string)
-	Delete(*domain.Restricted, string, string)
+	Delete(*domain.Base, string)
 
 	ToBaseDto(base domain.Base) dto.Base
 }
@@ -43,15 +43,14 @@ func (m *BaseMapper) Update(Base *domain.Base, name string) {
 	Base.UpdatedBy = name
 }
 
-func (m *BaseMapper) Delete(domain *domain.Restricted, id string, name string) {
+func (m *BaseMapper) Delete(Base *domain.Base, name string) {
 
 	// Set Deleted Value
-	domain.Id = id
-	domain.Base.IsActived = false
-	domain.Base.IsDeleted = true
-	domain.Base.UpdatedBy = name
-	domain.Base.DeletedBy = name
-	domain.Base.DeletedAt = time.Now()
+	Base.IsActived = false
+	Base.IsDeleted = true
+	Base.UpdatedBy = name
+	Base.DeletedBy = name
+	Base.DeletedAt = time.Now()
 }
 
 func (m *BaseMapper) ToBaseDto(base domain.Base) dto.Base {
