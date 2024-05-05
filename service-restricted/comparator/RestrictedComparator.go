@@ -8,32 +8,32 @@ import (
 )
 
 // Interface
-type RobotComparatorContract interface {
-	CheckId(uint) error
-	CheckName(dto.Robot) error
+type RestrictedComparatorContract interface {
+	CheckId(string) error
+	CheckName(dto.Restricted) error
 }
 
 // Class
-type RobotComparator struct {
-	repo repository.RobotRepositoryContract
+type RestrictedComparator struct {
+	repo repository.RestrictedRepositoryContract
 }
 
 // Constructor
-func NewRobotComparator(repo repository.RobotRepositoryContract) *RobotComparator {
-	return &RobotComparator{
+func NewRestrictedComparator(repo repository.RestrictedRepositoryContract) *RestrictedComparator {
+	return &RestrictedComparator{
 		repo: repo,
 	}
 }
 
 // Implementation
 
-func (c *RobotComparator) CheckId(id uint) error {
+func (c *RestrictedComparator) CheckId(id string) error {
 
 	// Get Data By Id
-	robot := c.repo.GetById(id)
+	restricted := c.repo.GetById(id)
 
 	// Return Error If Data Not Found
-	if robot.Id == 0 {
+	if restricted.Id == "" {
 
 		return errors.New(message.NotFound)
 	}
@@ -41,13 +41,13 @@ func (c *RobotComparator) CheckId(id uint) error {
 	return nil
 }
 
-func (c *RobotComparator) CheckName(dto dto.Robot) error {
+func (c *RestrictedComparator) CheckName(dto dto.Restricted) error {
 
 	// Get Data By Name
-	robot := c.repo.GetByName(dto.Name)
+	restricted := c.repo.GetByName(dto.Name)
 
 	// Return Error If Data Exists
-	if robot.Id != 0 && robot.Id != dto.Id {
+	if restricted.Id != "" && restricted.Id != dto.Id {
 
 		return errors.New(message.NameExists)
 	}

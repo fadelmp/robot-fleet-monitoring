@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
-	"robot-fleet-monitoring/service-robot/domain"
+	"robot-fleet-monitoring/service-restricted/domain"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
@@ -37,9 +37,9 @@ func InitDB() *gorm.DB {
 }
 
 func createTable(db *gorm.DB) {
-	db.CreateTable(&domain.Robot{})
+	db.CreateTable(&domain.Restricted{})
 }
 
 func migrateDDL(db *gorm.DB) {
-	db.AutoMigrate(&domain.Robot{})
+	db.AutoMigrate(&domain.Restricted{})
 }

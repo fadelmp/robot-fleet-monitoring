@@ -4,8 +4,8 @@ package main
 
 import (
 	"os"
-	config "robot-fleet-monitoring/service-robot/config"
-	routes2 "robot-fleet-monitoring/service-robot/routes"
+	config "robot-fleet-monitoring/service-restricted/config"
+	routes2 "robot-fleet-monitoring/service-restricted/routes"
 
 	"github.com/labstack/echo/v4"
 	middleware "github.com/labstack/echo/v4/middleware"

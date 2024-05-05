@@ -7,9 +7,9 @@ package dto
 // @Summary RobotDto object
 // @Description Represents a RobotDto Machine VendingDto
 type Restricted struct {
-	Id          uint      `json:"id"`
-	Name        string    `json:"name" validate:"required,min=1,max=30"`
-	Description string    `json:"description"`
-	Vehices     []Vehices `json:"vehices"`
+	Id          string `json:"id"`
+	Name        string `json:"name" validate:"required,min=1,max=30"`
+	Description string `json:"description"`
+	Area        []Area `json:"area"`
 	Base
 }

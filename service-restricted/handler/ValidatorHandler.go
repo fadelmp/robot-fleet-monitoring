@@ -1,14 +1,13 @@
 package handler
 
 import (
-	"robot-fleet-monitoring/service-robot/dto"
-	"strconv"
+	"robot-fleet-monitoring/service-restricted/dto"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 )
 
-func Validate(dto *dto.Robot) error {
+func Validate(dto *dto.Restricted) error {
 
 	validate := validator.New()
 
@@ -19,18 +18,9 @@ func Validate(dto *dto.Robot) error {
 	return nil
 }
 
-func ParseId(e echo.Context, dto *dto.Robot) error {
+func ParseId(e echo.Context, dto *dto.Restricted) error {
 
-	idStr := e.Param("id")
-
-	// Parse the id string to uint
-	id, err := strconv.ParseUint(idStr, 10, 64)
-
-	if err != nil {
-		return err
-	}
-
-	dto.Id = uint(id)
+	dto.Id = e.Param("id")
 
 	return nil
 }

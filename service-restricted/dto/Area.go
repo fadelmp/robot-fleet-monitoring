@@ -6,7 +6,7 @@ package dto
 
 // @Summary RobotDto object
 // @Description Represents a RobotDto Machine VendingDto
-type Vehices struct {
+type Area struct {
 	Longitude float64 `json:"longitude"`
 	Latitude  float64 `json:"latitude"`
 }

@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"robot-fleet-monitoring/service-robot/dto"
-	"robot-fleet-monitoring/service-robot/message"
+	"robot-fleet-monitoring/service-restricted/dto"
+	"robot-fleet-monitoring/service-restricted/message"
 
 	"github.com/labstack/echo/v4"
 )
@@ -48,11 +48,11 @@ func BadRequest(c echo.Context) error {
 	return CreateResponse(c, httpCode, *resp)
 }
 
-func SetUsername(robotDto *dto.Robot, c echo.Context) {
+func SetUsername(restrictedDto *dto.Restricted, c echo.Context) {
 
 	username := c.Request().Header.Get("username")
 
-	robotDto.Base.CreatedBy = username
-	robotDto.Base.UpdatedBy = username
-	robotDto.Base.DeletedBy = username
+	restrictedDto.Base.CreatedBy = username
+	restrictedDto.Base.UpdatedBy = username
+	restrictedDto.Base.DeletedBy = username
 }

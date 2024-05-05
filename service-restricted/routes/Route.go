@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"robot-fleet-monitoring/service-robot/injection"
+	"robot-fleet-monitoring/service-restricted/injection"
 
 	"github.com/go-redis/redis"
 	"github.com/jinzhu/gorm"
@@ -14,8 +14,8 @@ func Init(routes *echo.Echo, db *gorm.DB, redis *redis.Client) *echo.Echo {
 	//SwaggerRoute(routes)
 
 	// Robot Route & Injection
-	robot := injection.RobotInjection(db, redis)
-	RobotRoute(routes, robot)
+	restricted := injection.RestrictedInjection(db, redis)
+	RestrictedRoute(routes, restricted)
 
 	return routes
 }
