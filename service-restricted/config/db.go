@@ -38,8 +38,10 @@ func InitDB() *gorm.DB {
 
 func createTable(db *gorm.DB) {
 	db.CreateTable(&domain.Restricted{})
+	db.CreateTable(&domain.Area{})
 }
 
 func migrateDDL(db *gorm.DB) {
 	db.AutoMigrate(&domain.Restricted{})
+	db.AutoMigrate(&domain.Area{})
 }
