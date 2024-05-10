@@ -4,12 +4,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t robot-fleet-monitoring/service-robot-image:latest .'
+                sh 'docker build -t robot-fleet-monitoring/service-monitor-image:latest .'
             }
         }
         stage('Push') {
             steps {
-                sh 'docker push robot-fleet-monitoring/service-robot-image:latest'
+                sh 'docker push robot-fleet-monitoring/service-monitor-image:latest'
             }
         }
         stage('Deploy') {

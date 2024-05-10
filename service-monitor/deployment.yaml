@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: service-robot
+  name: service-monitor
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: service-robot
+      app: service-monitor
   template:
     metadata:
       labels:
-        app: service-robot
+        app: service-monitor
     spec:
       containers:
-      - name: service-robot
-        image: robot-fleet-monitoring/service-robot-image:latest
+      - name: service-monitor
+        image: robot-fleet-monitoring/service-monitor-image:latest
         ports:
         - containerPort: 8001
