@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	config "robot-fleet-monitoring/service-robot/config"
+	config "robot-fleet-monitoring/service-monitor/config"
+
+	routes2 "robot-fleet-monitoring/service-monitor/routes"
 )
 
 func main() {
@@ -14,8 +16,8 @@ func main() {
 	config.ReadEnv()
 
 	rabbitConfig := config.InitRabbit()
+	routes2.Init(rabbitConfig)
 
-	http.HandleFunc("/ws", handleWebSocket)
 	fmt.Println("Server is running on port 8080...")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 

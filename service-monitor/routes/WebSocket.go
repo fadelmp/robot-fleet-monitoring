@@ -7,5 +7,5 @@ import (
 
 func WebSocket() {
 
-	http.HandleFunc("/ws", handler.Broadcast)
+	http.HandleFunc("/ws", handler.WebSocket)
 }

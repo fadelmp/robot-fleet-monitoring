@@ -3,23 +3,23 @@ package routes
 import (
 	"log"
 
+	"robot-fleet-monitoring/service-monitor/handler"
+
 	"github.com/streadway/amqp"
 )
 
-func RabbitMq(ch *amqp.Channel) amqp.Queue {
+func RabbitMqRoute(ch *amqp.Channel, rabbit *handler.MonitorHandler) {
 
-	q, err := ch.QueueDeclare(
-		"monitor", // name
-		false,     // durable
-		false,     // delete when unused
-		false,     // exclusive
-		false,     // no-wait
-		nil,       // arguments
-	)
+	// Consume messages
+	msgs, err := ch.Consume("monitor", "", true, false, false, false, nil)
 
 	if err != nil {
-		log.Fatalf("Failed to declare a queue: %v", err)
+		log.Fatalf("Failed to register a consumer: %v", err)
 	}
 
-	return q
+	// Process incoming messages
+	for msg := range msgs {
+		// Handle each message in a separate goroutine
+		go rabbit.Consume(msg)
+	}
 }
